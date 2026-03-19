@@ -1,10 +1,6 @@
-import { useGetUsersQuery } from "@/store/usersApi";
 
 const UserForm = () => {
-    const {isLoading, isError, data} = useGetUsersQuery();
-    console.log("isLoading", isLoading);
-    console.log("isError", isError);
-    console.log("data", data);
+ 
   return (
     <div>
       
