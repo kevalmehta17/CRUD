@@ -1,0 +1,40 @@
+import type { User } from "@/types/user";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+
+interface userUiProps  {
+    searchQuery : string;
+    currentPage : number;
+    pageSize : number;
+    selectedUser : User | null
+}
+
+const initialState : userUiProps = {
+    searchQuery : "",
+    currentPage: 1,
+    pageSize:  10,
+    selectedUser: null,
+}   
+
+export const userUiSlice = createSlice({
+    name: "userUi",
+    initialState,
+    reducers: {
+        setSearchQuery: (state, action : PayloadAction<string>) => {
+            state.searchQuery = action.payload;
+            state.pageSize = 1;
+        },
+        setCurrentPage: (state, action : PayloadAction<number>) => {
+            state.currentPage = action.payload;
+        },
+        setPageSize: (state, action: PayloadAction<number>) => {
+            state.pageSize = action.payload
+            state.currentPage = 1;
+        },
+        setSelectedUser: (state, action: PayloadAction<User | null>) => {
+            state.selectedUser = action.payload
+        }
+    }
+})
+
+export const {setSearchQuery, setCurrentPage, setPageSize, setSelectedUser} = userUiSlice.actions;
+export default userUiSlice.reducer;
