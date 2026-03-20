@@ -16,16 +16,22 @@ import DeleteDialog from "@/components/DeleteDialog"
 import { useSelector } from "react-redux"
 
 interface TableListProps {
-  data: User[];
-  isLoading: boolean;
-  isError: boolean,
-  onEditClick: (user: User) => void;
-  deleteClick: (id: string) => void;
+  data: User[]
+  isLoading: boolean
+  isError: boolean
+  onEditClick: (user: User) => void
+  deleteClick: (id: string) => void
 }
 
-function TableDemo({data , isLoading, isError, onEditClick, deleteClick} : TableListProps) {
-  const getSearchQuery = useSelector((state) => state.userUi.searchQuery);
-  console.log("serach term from global", getSearchQuery)
+function TableDemo({
+  data,
+  isLoading,
+  isError,
+  onEditClick,
+  deleteClick,
+}: TableListProps) {
+  const getSearchQuery = useSelector((state) => state.userUi.searchQuery)
+  console.log("search term from global", getSearchQuery)
   if (isLoading) {
     return (
       <Button variant="outline" disabled size="sm">
@@ -34,13 +40,25 @@ function TableDemo({data , isLoading, isError, onEditClick, deleteClick} : Table
       </Button>
     )
   }
-  if(isError){
+  if (isError) {
     return <ErrorMsg />
   }
   // console.log("data inside", data);
 
-  const filteredData = () => {
-    if
+  const userData = () => {
+    if (!getSearchQuery) {
+      return data
+    }
+    const filteredData = data.filter((user) => {
+      return (
+        user.name.toLowerCase().includes(getSearchQuery) ||
+        user.city.toLowerCase().includes(getSearchQuery) ||
+        user.country.toLowerCase().includes(getSearchQuery) ||
+        user.state.toLowerCase().includes(getSearchQuery)
+      )
+    })
+    console.log("filteredData", filteredData);
+    return filteredData;
   }
 
   return (
@@ -55,19 +73,19 @@ function TableDemo({data , isLoading, isError, onEditClick, deleteClick} : Table
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((user) => (
+        {userData()?.map((user) => (
           <TableRow key={user.id}>
             <TableCell className="font-medium">{user.name}</TableCell>
             <TableCell>{user.city}</TableCell>
             <TableCell>{user.country}</TableCell>
             <TableCell>{user.state}</TableCell>
             <TableCell>
-              <Button variant={"outline"} onClick ={() => onEditClick(user)}>
+              <Button variant={"outline"} onClick={() => onEditClick(user)}>
                 <Pencil />
               </Button>
             </TableCell>
             <TableCell>
-              <DeleteDialog userId={user.id} onDelete={deleteClick}/>
+              <DeleteDialog userId={user.id} onDelete={deleteClick} />
             </TableCell>
           </TableRow>
         ))}
