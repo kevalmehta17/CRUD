@@ -4,7 +4,7 @@ import SearchBar from "./components/SearchBar/SearchBar"
 import Pagination from "./components/Pagination/Pagination"
 import { useDeleteUserMutation, useGetUsersQuery } from "@/store/usersApi"
 import { useAppDispatch } from "@/store/hooks"
-import { setSelectedUser } from "@/store/userUiSlice"
+import { openForm, setSelectedUser } from "@/store/userUiSlice"
 import type { User } from "@/types/user"
 import { useSelector } from "react-redux"
 
@@ -16,6 +16,7 @@ const HomePage = () => {
 
   const handleEditClick = (user: User) => {
     console.log("user we found is", user)
+    dispatch(openForm())
     dispatch(setSelectedUser(user))
   }
   const handleDeleteClick = async (id: string) => { 
@@ -45,7 +46,7 @@ const HomePage = () => {
 
   return (
     <div className="min-h-screen p-6">
-      <div className="flex h-full flex-row gap-6">
+      <div className="flex h-full flex-col gap-6">
         <aside className="w-95 shrink-0">
           <UserForm />
         </aside>

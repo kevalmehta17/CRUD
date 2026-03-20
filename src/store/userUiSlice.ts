@@ -46,5 +46,5 @@ export const userUiSlice = createSlice({
     }
 })
 
-export const {setSearchQuery, setCurrentPage, setPageSize, setSelectedUser} = userUiSlice.actions;
+export const {setSearchQuery, setCurrentPage, setPageSize, setSelectedUser, openForm, closeForm} = userUiSlice.actions;
 export default userUiSlice.reducer;
