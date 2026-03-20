@@ -5,7 +5,8 @@ interface userUiProps  {
     searchQuery : string;
     currentPage : number;
     pageSize : number;
-    selectedUser : User | null
+    selectedUser : User | null;
+    isFormOpen : boolean;
 }
 
 const initialState : userUiProps = {
@@ -13,6 +14,8 @@ const initialState : userUiProps = {
     currentPage: 1,
     pageSize:  10,
     selectedUser: null,
+    isFormOpen: false,
+
 }   
 
 export const userUiSlice = createSlice({
@@ -32,6 +35,13 @@ export const userUiSlice = createSlice({
         },
         setSelectedUser: (state, action: PayloadAction<User | null>) => {
             state.selectedUser = action.payload
+        },
+        openForm: (state) => {
+            state.isFormOpen = true;
+        },
+        closeForm: (state) => {
+            state.isFormOpen = false;
+            state.selectedUser = null;
         }
     }
 })

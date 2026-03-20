@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
@@ -13,7 +12,7 @@ import type { User } from "@/types/user"
 import { Pencil } from "lucide-react"
 import ErrorMsg from "@/components/ErrorMsg"
 import DeleteDialog from "@/components/DeleteDialog"
-import { useSelector } from "react-redux"
+import EmptyInputGroup from "@/components/EmptyInput"
 
 interface TableListProps {
   data: User[]
@@ -30,8 +29,9 @@ function TableDemo({
   onEditClick,
   deleteClick,
 }: TableListProps) {
-  const getSearchQuery = useSelector((state) => state.userUi.searchQuery)
-  console.log("search term from global", getSearchQuery)
+
+  console.log("data in table list is", data)
+
   if (isLoading) {
     return (
       <Button variant="outline" disabled size="sm">
@@ -43,27 +43,12 @@ function TableDemo({
   if (isError) {
     return <ErrorMsg />
   }
-  // console.log("data inside", data);
-
-  const userData = () => {
-    if (!getSearchQuery) {
-      return data
-    }
-    const filteredData = data.filter((user) => {
-      return (
-        user.name.toLowerCase().includes(getSearchQuery) ||
-        user.city.toLowerCase().includes(getSearchQuery) ||
-        user.country.toLowerCase().includes(getSearchQuery) ||
-        user.state.toLowerCase().includes(getSearchQuery)
-      )
-    })
-    console.log("filteredData", filteredData);
-    return filteredData;
+  if(!data || data.length == 0){
+    console.log("i am here")
+    return <EmptyInputGroup />;
   }
-
   return (
     <Table>
-      <TableCaption>User Data</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
@@ -73,7 +58,7 @@ function TableDemo({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {userData()?.map((user) => (
+        {data?.map((user) => (
           <TableRow key={user.id}>
             <TableCell className="font-medium">{user.name}</TableCell>
             <TableCell>{user.city}</TableCell>

@@ -1,23 +1,26 @@
 import { Input } from "@/components/ui/input"
 import { setSearchQuery } from "@/store/userUiSlice"
-import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useEffect, useState } from "react"
+import { useAppDispatch } from "@/store/hooks"
 
-const SearchBar = ({ data }) => {
+const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("")
+  const dispatch = useAppDispatch()
 
-  const dispatch = useDispatch()
-  dispatch(setSearchQuery(searchTerm))
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      dispatch(setSearchQuery(searchTerm))
+    }, 700)
+    return () => clearTimeout(timer)
+  }, [searchTerm, dispatch])
 
-  console.log("searched", searchTerm); 
   return (
-    <div>
-      <Input
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-    </div>
+    <Input
+      placeholder="Search..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
   )
 }
+
 export default SearchBar
