@@ -1,38 +1,50 @@
-import SearchBar from "./components/SearchBar/SearchBar"
 import TableList from "./components/Table/TableList"
 import UserForm from "./components/Form/UserForm"
+import SearchBar from "./components/SearchBar/SearchBar"
 import Pagination from "./components/Pagination/Pagination"
-import { useGetUsersQuery } from "@/store/usersApi"
-import { useDispatch } from "react-redux"
+import { useDeleteUserMutation, useGetUsersQuery } from "@/store/usersApi"
+import { useAppDispatch } from "@/store/hooks"
 import { setSelectedUser } from "@/store/userUiSlice"
 import type { User } from "@/types/user"
 
 const HomePage = () => {
-    const { data, isLoading, isError } = useGetUsersQuery();
-    const dispatch = useDispatch();
+  const { data, isLoading, isError } = useGetUsersQuery()
+  const [deleteUser] = useDeleteUserMutation()
+  const dispatch = useAppDispatch()
 
-    const handleEditClick = (user: User) => {
-      setSelectedUser(user)
-      console.log("selected user", user);
+  const handleEditClick = (user: User) => {
+    console.log("user we found is", user)
+    dispatch(setSelectedUser(user))
+  }
+  const handleDeleteClick = async (id: string) => {
+    try {
+      await deleteUser(id)
+      
+    } catch (error) {
+      console.error("Failed to delete user:", error)
     }
+  }
 
   return (
-    <div className="min-h-screen lg:px-8">
-      <div className="flex flex-col  gap-6">
-        <div className="border flex items-center p-4">
+    <div className="min-h-screen p-6">
+      <div className="flex flex-row gap-6 h-full">
+
+        <aside className="w-95 shrink-0">
           <UserForm />
-        </div>
-        <div className="flex flex-col gap-3 border p-4">
-          <div className="mb-4">
-            <SearchBar />
-          </div>
-          <div className="flex-1 overflow-auto">
-            <TableList data={data ?? []} onEditClick={handleEditClick} isLoading={isLoading} />
-          </div>
-          <div className="mt-4">
-            <Pagination />
-          </div>
-        </div>
+        </aside>
+
+        <section className="flex-1 min-w-0 flex flex-col gap-4">
+          <SearchBar data={data ?? []} />
+          <TableList
+            data={data ?? []}
+            isLoading={isLoading}
+            isError={isError}
+            onEditClick={handleEditClick}
+            deleteClick={handleDeleteClick}
+          />
+          <Pagination />
+        </section>
+
       </div>
     </div>
   )

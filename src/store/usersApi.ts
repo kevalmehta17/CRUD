@@ -28,11 +28,10 @@ export const usersApi = createApi({
       }),
       invalidatesTags: ["Users"],
     }),
-    deleteUser: builder.mutation<void, User>({
-      query: (user) => ({
-        url: `/api/${user.id}`,
+    deleteUser: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/api/${id}`,
         method: "DELETE",
-        body: user,
       }),
       invalidatesTags: ["Users"]
     }),

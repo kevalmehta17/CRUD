@@ -10,15 +10,22 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import type { User } from "@/types/user"
-import { Pencil, Trash } from "lucide-react"
+import { Pencil } from "lucide-react"
+import ErrorMsg from "@/components/ErrorMsg"
+import DeleteDialog from "@/components/DeleteDialog"
+import { useSelector } from "react-redux"
 
 interface TableListProps {
   data: User[];
   isLoading: boolean;
+  isError: boolean,
   onEditClick: (user: User) => void;
+  deleteClick: (id: string) => void;
 }
 
-function TableDemo({data , isLoading, onEditClick} : TableListProps) {
+function TableDemo({data , isLoading, isError, onEditClick, deleteClick} : TableListProps) {
+  const getSearchQuery = useSelector((state) => state.userUi.searchQuery);
+  console.log("serach term from global", getSearchQuery)
   if (isLoading) {
     return (
       <Button variant="outline" disabled size="sm">
@@ -27,7 +34,15 @@ function TableDemo({data , isLoading, onEditClick} : TableListProps) {
       </Button>
     )
   }
-  console.log("data inside", data)
+  if(isError){
+    return <ErrorMsg />
+  }
+  // console.log("data inside", data);
+
+  const filteredData = () => {
+    if
+  }
+
   return (
     <Table>
       <TableCaption>User Data</TableCaption>
@@ -52,9 +67,7 @@ function TableDemo({data , isLoading, onEditClick} : TableListProps) {
               </Button>
             </TableCell>
             <TableCell>
-              <Button variant={"destructive"}>
-                <Trash />
-              </Button>
+              <DeleteDialog userId={user.id} onDelete={deleteClick}/>
             </TableCell>
           </TableRow>
         ))}
