@@ -22,7 +22,7 @@ interface TableListProps {
   deleteClick: (id: string) => void
 }
 
-function TableDemo({
+function TableData({
   data,
   isLoading,
   isError,
@@ -79,4 +79,4 @@ function TableDemo({
   )
 }
 
-export default TableDemo
+export default TableData;

@@ -10,7 +10,7 @@ export const usersApi = createApi({
   endpoints: (builder) => ({
     getUsers: builder.query<User[], void>({
       query: () => "/api",
-      providesTags: ["Users"], // This tag will be used to invalidate the cache when a user is added, updated, or deleted
+      providesTags: ["Users"], // This tag   will be used to invalidate the cache when a user is added, updated, or deleted
     }),
     createUser: builder.mutation<User, Omit<User, "id">>({
       query: (newUser) => ({

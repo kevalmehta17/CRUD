@@ -40,8 +40,8 @@ const HomePage = () => {
         user.state.toLowerCase().includes(searchTerm)
       )
     })
-    console.log("filteredData", filteredData)
-    return filteredData
+    console.log("filteredData", filteredData);
+    return filteredData;
   }
 
   return (
