@@ -19,7 +19,6 @@ interface TableListProps {
   isLoading: boolean
   isError: boolean
   onEditClick: (user: User) => void
-  deleteClick: (id: string) => void
 }
 
 function TableData({
@@ -27,7 +26,6 @@ function TableData({
   isLoading,
   isError,
   onEditClick,
-  deleteClick,
 }: TableListProps) {
 
   console.log("data in table list is", data)
@@ -70,7 +68,7 @@ function TableData({
               </Button>
             </TableCell>
             <TableCell>
-              <DeleteDialog userId={user.id} onDelete={deleteClick} />
+              <DeleteDialog userId={user.id} />
             </TableCell>
           </TableRow>
         ))}

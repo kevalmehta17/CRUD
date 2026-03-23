@@ -2,8 +2,8 @@ import HomePage from "./pages/HomePage"
 
 export function App() {
   return (
-    <div className="flex w-full min-h-full p-6  ">
-     <HomePage />
+    <div className="min-h-screen w-full">
+      <HomePage />
     </div>
   )
 }

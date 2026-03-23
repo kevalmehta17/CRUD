@@ -24,7 +24,7 @@ export const userUiSlice = createSlice({
     reducers: {
         setSearchQuery: (state, action : PayloadAction<string>) => {
             state.searchQuery = action.payload;
-            state.pageSize = 1;
+            state.currentPage = 1;
         },
         setCurrentPage: (state, action : PayloadAction<number>) => {
             state.currentPage = action.payload;

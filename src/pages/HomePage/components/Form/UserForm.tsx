@@ -7,13 +7,13 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useCreateUserMutation, useUpdateUserMutation } from "@/store/usersApi"
-import { closeForm, openForm } from "@/store/userUiSlice"
+import { useCreateUserMutation, useUpdateUserMutation } from "@/store/usersApi";
+import type { RootState } from "@/store/UserStore";
+import { closeForm } from "@/store/userUiSlice"
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -32,7 +32,7 @@ const emptyFormData: FormData = {
 }
 
 const UserForm = () => {
-  const selectedUser = useSelector((state) => state.userUi.selectedUser)
+  const selectedUser = useSelector((state : RootState) => state.userUi.selectedUser)
   const [formData, setFormData] = useState<FormData>({
     name: "",
     city: "",
@@ -41,7 +41,7 @@ const UserForm = () => {
   })
   const dispatch = useDispatch()
   console.log("selected user inside form", selectedUser)
-  const isFormOpen = useSelector((state) => state.userUi.isFormOpen)
+  const isFormOpen = useSelector((state : RootState) => state.userUi.isFormOpen)
   console.log("formOpen", isFormOpen)
   const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
@@ -102,11 +102,6 @@ const UserForm = () => {
         }
       }}
     >
-      <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => dispatch(openForm())}>
-          Add User
-        </Button>
-      </DialogTrigger>
       <DialogContent className="sm:max-w-sm">
         <form onSubmit={handleSubmit}>
           <DialogHeader>
@@ -180,24 +175,4 @@ const UserForm = () => {
   )
 }
 
-export default UserForm
-
-// Table.tsx needs
-//   → users[]          comes from RTK Query
-//   → isLoading        comes from RTK Query
-//   → onRowClick       comes from HomePage
-//   → onDelete         comes from RTK Query mutation
-
-// Form.tsx needs
-//   → selectedUser     comes from uiSlice
-//   → onSubmit         comes from RTK Query mutation
-//   → onCancel         comes from HomePage
-
-// Pagination.tsx needs
-//   → currentPage      comes from uiSlice
-//   → pageSize         comes from uiSlice
-//   → totalCount       comes from RTK Query data
-
-// SearchBar.tsx needs
-//   → searchQuery      comes from uiSlice
-//   → onSearch         comes from HomePage
+export default UserForm;

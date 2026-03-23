@@ -11,14 +11,16 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
+import { useDeleteUserMutation } from "@/store/usersApi"
 import { Trash, Trash2Icon } from "lucide-react"
 
 interface DeleteProps {
   userId: string
-  onDelete: (id: string) => Promise<void>
 }
 
-export default function DeleteDialog({ userId, onDelete }: DeleteProps) {
+export default function DeleteDialog({ userId }: DeleteProps) {
+  const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -41,7 +43,8 @@ export default function DeleteDialog({ userId, onDelete }: DeleteProps) {
           <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
           <AlertDialogAction
             variant="destructive"
-            onClick={() => onDelete(userId)}
+            disabled={isDeleting}
+            onClick={() => deleteUser(userId)}
           >
             Delete
           </AlertDialogAction>
