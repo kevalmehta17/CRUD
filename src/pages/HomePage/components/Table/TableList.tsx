@@ -66,7 +66,7 @@ function TableData({
             <TableCell>{user.country}</TableCell>
             <TableCell>{user.state}</TableCell>
             <TableCell>
-              <Button variant={"outline"} onClick={() => onEditClick(user)}>
+              <Button className="cursor-pointer" variant={"outline"} onClick={() => onEditClick(user)}>
                 <Pencil />
               </Button>
             </TableCell>

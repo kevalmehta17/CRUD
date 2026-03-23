@@ -40,36 +40,6 @@ const getPageNumbers = (
   return pages
 }
 
-// const getPageNumbers = (currentPage: number, totalPages: number): number[] => {
-//   // total pages is small — show all
-//   if (totalPages <= 5) {
-//     return Array.from({ length: totalPages }, (_, i) => i + 1)
-//   }
-
-//   // calculate start so currentPage is in middle
-//   let start = currentPage - 2
-//   let end = currentPage + 2
-
-//   // fix if start goes below 1
-//   if (start < 1) {
-//     start = 1
-//     end = 5
-//   }
-
-//   // fix if end goes above totalPages
-//   if (end > totalPages) {
-//     end = totalPages
-//     start = totalPages - 4
-//   }
-
-//   // return [start, start+1, ..., end]
-//   const pages = []
-//   for (let i = start; i <= end; i++) {
-//     pages.push(i)
-//   }
-//   return pages
-// }
-
 const Pagination = ({
   currentPage,
   totalPages,
