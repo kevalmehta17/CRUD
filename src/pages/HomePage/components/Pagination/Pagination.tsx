@@ -119,7 +119,7 @@ const Pagination = ({
         {pages.map((page, index) =>
           page === "..." ? (
             <span
-              key={`ellipsis-${index}`}
+              key={`ind-${index}`}
               className="px-2 text-muted-foreground"
             >
               ...
@@ -136,7 +136,7 @@ const Pagination = ({
             </Button>
           )
         )}
-
+        
         <Button
           variant="outline"
           size="icon"
@@ -146,7 +146,6 @@ const Pagination = ({
         >
           <ChevronRight className="w-4 h-4" />
         </Button>
-
       </div>
     </div>
   )

@@ -18,6 +18,8 @@ const HomePage = () => {
   const getSearchQuery = useSelector((state: RootState) => state.userUi.searchQuery)
   const currentPage = useSelector((state: RootState) => state.userUi.currentPage)
   const pageSize = useSelector((state: RootState) => state.userUi.pageSize)
+  console.log("debugging of currentPage", currentPage)
+    console.log("debug of pageSize", pageSize)
 
   const handleEditClick = (user: User) => {
     dispatch(setSelectedUser(user))
@@ -28,14 +30,16 @@ const HomePage = () => {
     if (!data) return [];
     if (!getSearchQuery.trim()) return data;
     const searchTerm = getSearchQuery.toLowerCase();
-    return data.filter((user) =>
+    const resultData = data.filter((user) =>
       user.name.toLowerCase().includes(searchTerm) ||
       user.city.toLowerCase().includes(searchTerm) ||
       user.country.toLowerCase().includes(searchTerm) ||
       user.state.toLowerCase().includes(searchTerm)
-    )
+    );
+    return resultData;
   }, [data, getSearchQuery])
 
+  // this function will be used to show current page data based on page size and current page number
   const paginatedData = useMemo(() => {
     console.log("iam called")
     const startIndex = (currentPage - 1) * pageSize;

@@ -15,7 +15,6 @@ const initialState : userUiProps = {
     pageSize:  10,
     selectedUser: null,
     isFormOpen: false,
-
 }   
 
 export const userUiSlice = createSlice({

@@ -25,10 +25,10 @@ interface FormData {
   state: string
 }
 interface FormErrors {
-  name?: string;
-  city?: string;
-  country?: string;
-  state?: string;
+  name?: string
+  city?: string
+  country?: string
+  state?: string
 }
 
 const emptyFormData: FormData = {
@@ -47,8 +47,8 @@ const UserForm = () => {
     city: "",
     country: "",
     state: "",
-  });
-  const [errors, setErrors] = useState<FormErrors>({});
+  })
+  const [errors, setErrors] = useState<FormErrors>({})
   const dispatch = useDispatch()
   console.log("selected user inside form", selectedUser)
   const isFormOpen = useSelector((state: RootState) => state.userUi.isFormOpen)
@@ -82,35 +82,41 @@ const UserForm = () => {
     setFormData({ ...formData, [inputName]: changedValue })
   }
 
-  // validation 
+  // validation
   const validateForm = () => {
-    const newErrors : FormErrors = {};
-    if(!formData.name.trim()) newErrors.name = "Name is required";
-    if(!formData.city.trim()) newErrors.city = "City is required";
-    if(!formData.country.trim()) newErrors.country = "Country is required";
-    if(!formData.state.trim()) newErrors.state = "State is required";
-    setErrors(newErrors);
-    console.log("the error length is", Object.keys(newErrors).length);
-    return Object.keys(newErrors).length === 0;
+    const newErrors: FormErrors = {}
+    if (!formData.name.trim()) newErrors.name = "Name is required"
+    if (!formData.city.trim()) newErrors.city = "City is required"
+    if (!formData.country.trim()) newErrors.country = "Country is required"
+    if (!formData.state.trim()) newErrors.state = "State is required"
+    setErrors(newErrors)
+    console.log("the error length is", Object.keys(newErrors).length)
+    return Object.keys(newErrors).length === 0
   }
 
   // handle form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if(!validateForm()) return;
-    // if everything is Good
-    console.log("am i rendering")
-    if (selectedUser) {
-      await updateUser({ id: selectedUser.id, ...formData })
-      toast.success("User updated successfully!")
-      console.log("after updated user", formData)
-    } else {
-      await createUser(formData)
-      toast.success("User created successfully!")
-      console.log("after created user", formData)
+    if (!validateForm()) return
+    try {
+      console.log("try selected", selectedUser)
+      if (selectedUser) {
+        console.log("selectedUser edit", selectedUser)
+         await updateUser({ id: selectedUser.id, ...formData }).unwrap();
+        console.log("after updated user", formData)
+        toast.success("User updated successfully!")
+      } else {
+        console.log("selectedUser create", selectedUser)
+        await createUser(formData).unwrap();
+        toast.success("User created successfully!")
+        console.log("after created user", formData)
+      }
+      dispatch(closeForm())
+      setFormData(emptyFormData)
+    } catch (error) {
+      toast.error("An error occurred while saving the user.")
+      console.error("Error saving user:", error)
     }
-    dispatch(closeForm())
-    setFormData(emptyFormData)
   }
 
   return (
@@ -144,7 +150,9 @@ const UserForm = () => {
                 value={formData.name}
                 onChange={handleChange}
               />
-              {errors.name && <span className="text-destructive text-sm">{errors.name}</span>}
+              {errors.name && (
+                <span className="text-sm text-destructive">{errors.name}</span>
+              )}
             </Field>
             <Field>
               <Label htmlFor="city-1">City</Label>
@@ -155,7 +163,9 @@ const UserForm = () => {
                 value={formData.city}
                 onChange={handleChange}
               />
-              {errors.city && <span className="text-destructive text-sm">{errors.city}</span>}
+              {errors.city && (
+                <span className="text-sm text-destructive">{errors.city}</span>
+              )}
             </Field>
             <Field>
               <Label htmlFor="country-1">Country</Label>
@@ -166,7 +176,11 @@ const UserForm = () => {
                 value={formData.country}
                 onChange={handleChange}
               />
-              {errors.country && <span className="text-destructive text-sm">{errors.country}</span>}
+              {errors.country && (
+                <span className="text-sm text-destructive">
+                  {errors.country}
+                </span>
+              )}
             </Field>
             <Field>
               <Label htmlFor="state-1">State</Label>
@@ -177,7 +191,9 @@ const UserForm = () => {
                 value={formData.state}
                 onChange={handleChange}
               />
-              {errors.state && <span className="text-destructive text-sm">{errors.state}</span>}
+              {errors.state && (
+                <span className="text-sm text-destructive">{errors.state}</span>
+              )}
             </Field>
           </FieldGroup>
           <DialogFooter>
