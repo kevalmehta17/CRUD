@@ -9,10 +9,10 @@ import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 
 interface PaginationProps {
-  currentPage: number
-  totalPages: number
-  onPageChange: (page: number) => void
-  pageSize: number
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  pageSize: number;
   onPageSizeChange: (size: number) => void
 }
 
@@ -20,7 +20,7 @@ const getPageNumbers = (
   currentPage: number,
   totalPages: number
 ): (number | "...")[] => {
-  if (totalPages <= 5) {
+  if (totalPages <= 4 ) {
     return Array.from({ length: totalPages }, (_, i) => i + 1)
   }
 
@@ -28,16 +28,47 @@ const getPageNumbers = (
 
   if (currentPage > 3) pages.push("...")
 
-  const start = Math.max(2, currentPage - 1)
-  const end = Math.min(totalPages - 1, currentPage + 1)
+  const start = Math.max(2, currentPage - 1);
+  const end = Math.min(totalPages - 1, currentPage + 1);
 
-  for (let i = start; i <= end; i++) pages.push(i)
-
-  if (currentPage < totalPages - 2) pages.push("...")
+  for (let i = start; i <= end; i++) {
+    pages.push(i)
+  }
+  if (currentPage < totalPages - 2) pages.push("...");
 
   pages.push(totalPages)
   return pages
 }
+
+// const getPageNumbers = (currentPage: number, totalPages: number): number[] => {
+//   // total pages is small — show all
+//   if (totalPages <= 5) {
+//     return Array.from({ length: totalPages }, (_, i) => i + 1)
+//   }
+
+//   // calculate start so currentPage is in middle
+//   let start = currentPage - 2
+//   let end = currentPage + 2
+
+//   // fix if start goes below 1
+//   if (start < 1) {
+//     start = 1
+//     end = 5
+//   }
+
+//   // fix if end goes above totalPages
+//   if (end > totalPages) {
+//     end = totalPages
+//     start = totalPages - 4
+//   }
+
+//   // return [start, start+1, ..., end]
+//   const pages = []
+//   for (let i = start; i <= end; i++) {
+//     pages.push(i)
+//   }
+//   return pages
+// }
 
 const Pagination = ({
   currentPage,
@@ -47,21 +78,24 @@ const Pagination = ({
   onPageSizeChange,
 }: PaginationProps) => {
   const pages = getPageNumbers(currentPage, totalPages)
+  console.log("pages are", pages);
 
   return (
     <div className="flex items-center justify-between py-2">
 
-      {/* Left — rows per page */}
-      <div className="flex items-center gap-2 text-sm text-muted-foreground">
+      <div className="flex items-center gap-2 text-sm text-slate-300">
         <span>Rows per page</span>
         <Select
           value={String(pageSize)}
-          onValueChange={(val) => onPageSizeChange(Number(val))}
+          onValueChange={(val) => {
+            onPageSizeChange(Number(val))
+            onPageChange(1)
+          }}
         >
-          <SelectTrigger className="w-17.5 h-8">
+          <SelectTrigger className="w-18 h-8 cursor-pointer">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent> 
             {[10, 20, 50].map((size) => (
               <SelectItem key={size} value={String(size)}>
                 {size}
@@ -71,21 +105,17 @@ const Pagination = ({
         </Select>
       </div>
 
-      {/* Right — page controls */}
       <div className="flex items-center gap-1">
-
-        {/* Prev */}
         <Button
           variant="outline"
           size="icon"
-          className="h-8 w-8"
+          className="h-8 w-8 cursor-pointer"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
         >
           <ChevronLeft className="w-4 h-4" />
         </Button>
 
-        {/* Page numbers */}
         {pages.map((page, index) =>
           page === "..." ? (
             <span
@@ -99,7 +129,7 @@ const Pagination = ({
               key={page}
               variant={page === currentPage ? "default" : "outline"}
               size="icon"
-              className="h-8 w-8"
+              className="h-8 w-8 cursor-pointer"
               onClick={() => onPageChange(page)}
             >
               {page}
@@ -107,11 +137,10 @@ const Pagination = ({
           )
         )}
 
-        {/* Next */}
         <Button
           variant="outline"
           size="icon"
-          className="h-8 w-8"
+          className="h-8 w-8 cursor-pointer"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
         >

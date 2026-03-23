@@ -1,6 +1,5 @@
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -42,21 +41,25 @@ export default function DeleteDialog({ userId }: DeleteProps) {
           <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
             <Trash2Icon />
           </AlertDialogMedia>
-          <AlertDialogTitle>Delete chat?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This will permanently delete the record. <br />
+          <AlertDialogTitle>Delete User</AlertDialogTitle>
+          <AlertDialogDescription>  
+            This will permanently delete the User. <br />
             Are You Sure?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
-          <AlertDialogAction
+          <AlertDialogCancel variant="outline" disabled={isDeleting}>
+            Cancel
+          </AlertDialogCancel>
+
+          <Button
             variant="destructive"
             disabled={isDeleting}
             onClick={handleDelete}
+            type="submit"
           >
             {isDeleting ? "Deleting..." : "Delete"}
-          </AlertDialogAction>
+          </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

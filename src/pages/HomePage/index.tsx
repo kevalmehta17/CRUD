@@ -25,9 +25,9 @@ const HomePage = () => {
   }
 
   const filteredData = useMemo(() => {
-    if (!data) return []
-    if (!getSearchQuery.trim()) return data
-    const searchTerm = getSearchQuery.toLowerCase()
+    if (!data) return [];
+    if (!getSearchQuery.trim()) return data;
+    const searchTerm = getSearchQuery.toLowerCase();
     return data.filter((user) =>
       user.name.toLowerCase().includes(searchTerm) ||
       user.city.toLowerCase().includes(searchTerm) ||
@@ -37,8 +37,11 @@ const HomePage = () => {
   }, [data, getSearchQuery])
 
   const paginatedData = useMemo(() => {
+    console.log("iam called")
     const startIndex = (currentPage - 1) * pageSize;
-    return filteredData.slice(startIndex, startIndex + pageSize);
+    const endIndex = startIndex + pageSize;
+    console.log("filtered data in paginated data is", filteredData.slice(startIndex, endIndex))
+    return filteredData.slice(startIndex, endIndex);
   }, [currentPage, pageSize, filteredData])
 
   const totalPages = Math.ceil(filteredData.length / pageSize) || 1
@@ -47,7 +50,6 @@ const HomePage = () => {
     <div className="min-h-screen bg-background">
     <div className="max-w-5xl mx-auto px-6 py-8 flex flex-col gap-4">
 
-      {/* Top bar */}
       <div className="flex items-center justify-between gap-4">
         <div className="w-full max-w-sm">
           <SearchBar />
@@ -57,7 +59,6 @@ const HomePage = () => {
         </Button>
       </div>
 
-      {/* Table — fixed height, scrollable */}
       <div className="rounded-md border overflow-hidden">
         <div className="h-150 overflow-y-auto">
           <TableList
@@ -69,7 +70,6 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* Pagination */}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
@@ -78,7 +78,6 @@ const HomePage = () => {
         onPageSizeChange={(size) => dispatch(setPageSize(size))}
       />
 
-      {/* Modal — no visible UI, controlled by Redux */}
       <UserForm />
 
     </div>
