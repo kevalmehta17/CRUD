@@ -47,6 +47,10 @@ const UserForm = () => {
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
 
   useEffect(() => {
+    if (!isFormOpen) {
+      setFormData(emptyFormData);
+      return;
+    }
     if (selectedUser) {
       setFormData({
         name: selectedUser.name,
@@ -57,7 +61,7 @@ const UserForm = () => {
     } else {
       setFormData(emptyFormData)
     }
-  }, [selectedUser])
+  }, [selectedUser, isFormOpen]);
 
   // handle Input change
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
