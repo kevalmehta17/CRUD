@@ -32,10 +32,13 @@ function TableData({
 
   if (isLoading) {
     return (
-      <Button variant="outline" disabled size="sm">
+      <div className="flex justify-center relative items-center h-full">
+
+      <Button variant="outline" disabled size="sm" className="absolute top-1/2 -translate-y-1/2">
         <Spinner data-icon="inline-start" />
         Please wait
       </Button>
+      </div>
     )
   }
   if (isError) {

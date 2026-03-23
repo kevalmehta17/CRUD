@@ -11,8 +11,8 @@ import {
 import { Field, FieldGroup } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useCreateUserMutation, useUpdateUserMutation } from "@/store/usersApi";
-import type { RootState } from "@/store/UserStore";
+import { useCreateUserMutation, useUpdateUserMutation } from "@/store/usersApi"
+import type { RootState } from "@/store/UserStore"
 import { closeForm } from "@/store/userUiSlice"
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -24,6 +24,12 @@ interface FormData {
   country: string
   state: string
 }
+interface FormErrors {
+  name?: string;
+  city?: string;
+  country?: string;
+  state?: string;
+}
 
 const emptyFormData: FormData = {
   name: "",
@@ -33,24 +39,27 @@ const emptyFormData: FormData = {
 }
 
 const UserForm = () => {
-  const selectedUser = useSelector((state : RootState) => state.userUi.selectedUser)
+  const selectedUser = useSelector(
+    (state: RootState) => state.userUi.selectedUser
+  )
   const [formData, setFormData] = useState<FormData>({
     name: "",
     city: "",
     country: "",
     state: "",
-  })
+  });
+  const [errors, setErrors] = useState<FormErrors>({});
   const dispatch = useDispatch()
   console.log("selected user inside form", selectedUser)
-  const isFormOpen = useSelector((state : RootState) => state.userUi.isFormOpen)
+  const isFormOpen = useSelector((state: RootState) => state.userUi.isFormOpen)
   console.log("formOpen", isFormOpen)
-  const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
-  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation();
+  const [createUser, { isLoading: isCreating }] = useCreateUserMutation()
+  const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation()
 
   useEffect(() => {
     if (!isFormOpen) {
-      setFormData(emptyFormData);
-      return;
+      setFormData(emptyFormData)
+      return
     }
     if (selectedUser) {
       setFormData({
@@ -62,42 +71,46 @@ const UserForm = () => {
     } else {
       setFormData(emptyFormData)
     }
-  }, [selectedUser, isFormOpen]);
+  }, [selectedUser, isFormOpen])
 
   // handle Input change
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log("inside eve", e.target.name);
-    const inputName  = e.target.name;
-    const changedValue = e.target.value;
-    console.log("the name of e is:-", e.target.value);
-    setFormData({...formData, [inputName]: changedValue });
+    console.log("inside eve", e.target.name)
+    const inputName = e.target.name
+    const changedValue = e.target.value
+    console.log("the name of e is:-", e.target.value)
+    setFormData({ ...formData, [inputName]: changedValue })
+  }
+
+  // validation 
+  const validateForm = () => {
+    const newErrors : FormErrors = {};
+    if(!formData.name.trim()) newErrors.name = "Name is required";
+    if(!formData.city.trim()) newErrors.city = "City is required";
+    if(!formData.country.trim()) newErrors.country = "Country is required";
+    if(!formData.state.trim()) newErrors.state = "State is required";
+    setErrors(newErrors);
+    console.log("the error length is", Object.keys(newErrors).length);
+    return Object.keys(newErrors).length === 0;
   }
 
   // handle form submission
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (
-      !formData.name.trim() ||
-      !formData.city.trim() ||
-      !formData.country.trim() ||
-      !formData.state.trim()
-    ) {
-      alert("please fill out all information");
-      return;
-    }
+    if(!validateForm()) return;
     // if everything is Good
+    console.log("am i rendering")
     if (selectedUser) {
-      await updateUser({ id: selectedUser.id, ...formData });
-      toast.success("User updated successfully!");
-      console.log('after updated user', formData);
+      await updateUser({ id: selectedUser.id, ...formData })
+      toast.success("User updated successfully!")
+      console.log("after updated user", formData)
+    } else {
+      await createUser(formData)
+      toast.success("User created successfully!")
+      console.log("after created user", formData)
     }
-    else {
-      await createUser(formData);
-      toast.success("User created successfully!");
-      console.log('after created user', formData);
-    }
-    dispatch(closeForm());
-    setFormData(emptyFormData);
+    dispatch(closeForm())
+    setFormData(emptyFormData)
   }
 
   return (
@@ -116,7 +129,9 @@ const UserForm = () => {
               {selectedUser ? "Edit profile" : "Add User"}
             </DialogTitle>
             <DialogDescription>
-              {selectedUser ? "Make changes to your profile here. Click save when you're done." : "Fill out the form below to add a new user."}
+              {selectedUser
+                ? "Make changes to your profile here. Click save when you're done."
+                : "Fill out the form below to add a new user."}
             </DialogDescription>
           </DialogHeader>
           <FieldGroup>
@@ -127,9 +142,9 @@ const UserForm = () => {
                 name="name"
                 placeholder="Enter Name"
                 value={formData.name}
-                onChange={handleChange
-                }
+                onChange={handleChange}
               />
+              {errors.name && <span className="text-destructive text-sm">{errors.name}</span>}
             </Field>
             <Field>
               <Label htmlFor="city-1">City</Label>
@@ -138,10 +153,9 @@ const UserForm = () => {
                 name="city"
                 placeholder="Enter City"
                 value={formData.city}
-                onChange={(e) => {
-                  setFormData({ ...formData, city: e.target.value })
-                }}
+                onChange={handleChange}
               />
+              {errors.city && <span className="text-destructive text-sm">{errors.city}</span>}
             </Field>
             <Field>
               <Label htmlFor="country-1">Country</Label>
@@ -150,10 +164,9 @@ const UserForm = () => {
                 name="country"
                 placeholder="Enter Country"
                 value={formData.country}
-                onChange={(e) =>
-                  setFormData({ ...formData, country: e.target.value })
-                }
+                onChange={handleChange}
               />
+              {errors.country && <span className="text-destructive text-sm">{errors.country}</span>}
             </Field>
             <Field>
               <Label htmlFor="state-1">State</Label>
@@ -162,19 +175,24 @@ const UserForm = () => {
                 name="state"
                 placeholder="Enter State"
                 value={formData.state}
-                onChange={(e) =>
-                  setFormData({ ...formData, state: e.target.value })
-                }
+                onChange={handleChange}
               />
+              {errors.state && <span className="text-destructive text-sm">{errors.state}</span>}
             </Field>
           </FieldGroup>
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant="outline" disabled={isCreating || isUpdating} onClick={() => dispatch(closeForm())}>
+              <Button
+                variant="outline"
+                disabled={isCreating || isUpdating}
+                onClick={() => dispatch(closeForm())}
+              >
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit">{ isCreating || isUpdating ? "Saving..." : "Save changes"}</Button>
+            <Button type="submit">
+              {isCreating || isUpdating ? "Saving..." : "Save changes"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
@@ -182,4 +200,4 @@ const UserForm = () => {
   )
 }
 
-export default UserForm;
+export default UserForm

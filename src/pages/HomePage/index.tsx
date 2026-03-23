@@ -37,8 +37,8 @@ const HomePage = () => {
   }, [data, getSearchQuery])
 
   const paginatedData = useMemo(() => {
-    const startIndex = (currentPage - 1) * pageSize
-    return filteredData.slice(startIndex, startIndex + pageSize)
+    const startIndex = (currentPage - 1) * pageSize;
+    return filteredData.slice(startIndex, startIndex + pageSize);
   }, [currentPage, pageSize, filteredData])
 
   const totalPages = Math.ceil(filteredData.length / pageSize) || 1

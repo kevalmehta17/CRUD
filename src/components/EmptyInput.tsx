@@ -11,8 +11,8 @@ export default function EmptyInputGroup() {
   return (
     <Empty>
       <EmptyHeader>
-        <EmptyTitle>404 - Not Found</EmptyTitle>
-        <EmptyDescription>
+        <EmptyTitle className="text-red-600 text-xl">404 - Not Found</EmptyTitle>
+        <EmptyDescription className="text-red-500">
           The term you&apos;re looking for doesn&apos;t exist.
         </EmptyDescription>
       </EmptyHeader>
