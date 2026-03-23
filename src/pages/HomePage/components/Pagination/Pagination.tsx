@@ -58,7 +58,7 @@ const Pagination = ({
           value={String(pageSize)}
           onValueChange={(val) => onPageSizeChange(Number(val))}
         >
-          <SelectTrigger className="w-[70px] h-8">
+          <SelectTrigger className="w-17.5 h-8">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>

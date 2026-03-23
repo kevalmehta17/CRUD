@@ -13,8 +13,7 @@ export default function EmptyInputGroup() {
       <EmptyHeader>
         <EmptyTitle>404 - Not Found</EmptyTitle>
         <EmptyDescription>
-          The term you&apos;re looking for doesn&apos;t exist. Try searching for
-          what you need below.
+          The term you&apos;re looking for doesn&apos;t exist.
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>

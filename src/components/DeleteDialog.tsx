@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { useDeleteUserMutation } from "@/store/usersApi"
 import { Trash, Trash2Icon } from "lucide-react"
+import { toast } from "sonner"
 
 interface DeleteProps {
   userId: string
@@ -20,7 +21,15 @@ interface DeleteProps {
 
 export default function DeleteDialog({ userId }: DeleteProps) {
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
-
+  const handleDelete = async () => {
+    try {
+      await deleteUser(userId).unwrap();
+      toast.success("User deleted successfully!");
+    } catch (error) {
+      toast.error("Failed to delete user.");
+      console.error("Delete user error:", error);
+    }
+  }
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -44,9 +53,9 @@ export default function DeleteDialog({ userId }: DeleteProps) {
           <AlertDialogAction
             variant="destructive"
             disabled={isDeleting}
-            onClick={() => deleteUser(userId)}
+            onClick={handleDelete}
           >
-            Delete
+            {isDeleting ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -59,7 +59,7 @@ const HomePage = () => {
 
       {/* Table — fixed height, scrollable */}
       <div className="rounded-md border overflow-hidden">
-        <div className="h-[600px] overflow-y-auto">
+        <div className="h-150 overflow-y-auto">
           <TableList
             data={paginatedData}
             isLoading={isLoading}

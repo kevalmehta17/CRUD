@@ -16,6 +16,7 @@ import type { RootState } from "@/store/UserStore";
 import { closeForm } from "@/store/userUiSlice"
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { toast } from "sonner"
 
 interface FormData {
   name: string
@@ -87,10 +88,12 @@ const UserForm = () => {
     // if everything is Good
     if (selectedUser) {
       await updateUser({ id: selectedUser.id, ...formData });
+      toast.success("User updated successfully!");
       console.log('after updated user', formData);
     }
     else {
       await createUser(formData);
+      toast.success("User created successfully!");
       console.log('after created user', formData);
     }
     dispatch(closeForm());
