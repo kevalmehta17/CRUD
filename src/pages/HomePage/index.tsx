@@ -3,7 +3,7 @@ import UserForm from "./components/Form"
 import SearchBar from "./components/SearchBar"
 import Pagination from "./components/Pagination"
 import { Button } from "@/components/ui/button"
-import { useUsersTable } from "@/pages/HomePage/hooks/useUserTable"
+import { useUsersTable } from "@/pages/HomePage/useHomePage"
 
 const HomePage = () => {
   const {

@@ -1,24 +1,10 @@
 import { Input } from "@/components/ui/input"
-import { setSearchQuery } from "@/store/userUiSlice"
-import { useEffect, useState } from "react"
 import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useDispatch } from "react-redux"
-import { useDebounce } from "@/hooks/useDebounce"
+import { useSearchBar } from "./useSearchBar"
 
 const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState("")
-  const debouncedSearch = useDebounce(searchTerm, 700)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(setSearchQuery(debouncedSearch))
-  }, [debouncedSearch, dispatch])
-
-  const handleClearField = () => {
-    setSearchTerm("")
-    dispatch(setSearchQuery(""))
-  }
+  const { searchTerm, setSearchTerm, handleClearField } = useSearchBar()
 
   return (
     <div className="relative w-full">
