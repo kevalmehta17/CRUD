@@ -6,11 +6,11 @@ export const usersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://69bb87d60915748735b967b4.mockapi.io",
   }),
-  tagTypes: ["Users"], // Define a tag for users to manage cache invalidation
+  tagTypes: ["Users"], 
   endpoints: (builder) => ({
     getUsers: builder.query<User[], void>({
       query: () => "/api",
-      providesTags: ["Users"], // This tag   will be used to invalidate the cache when a user is added, updated, or deleted
+      providesTags: ["Users"], 
     }),
     createUser: builder.mutation<User, Omit<User, "id">>({
       query: (newUser) => ({
@@ -18,7 +18,7 @@ export const usersApi = createApi({
         method: "POST",
         body: newUser,
       }),
-      invalidatesTags: ["Users"], // Invalidate the "Users" tag to refetch the user list after mutating user data
+      invalidatesTags: ["Users"], 
     }),
     updateUser: builder.mutation<User, User>({
       query: (user) => ({

@@ -46,7 +46,7 @@ function TableData({
     return <EmptyInputGroup />; 
   }
   return (
-    <Table>
+    <Table className="min-w-150 w-full">
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
