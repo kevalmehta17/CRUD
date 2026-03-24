@@ -1,49 +1,48 @@
-import type { User } from "@/types/user";
-import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { User, UserUiState } from "@/types/user"
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit"
 
-interface UserUiState  {
-    searchQuery : string;
-    currentPage : number;
-    pageSize : number;
-    selectedUser : User | null;
-    isFormOpen : boolean;
+const initialState: UserUiState = {
+  searchQuery: "",
+  currentPage: 1,
+  pageSize: 10,
+  selectedUser: null,
+  isFormOpen: false,
 }
 
-const initialState : UserUiState = {
-    searchQuery : "",
-    currentPage: 1,
-    pageSize:  10,
-    selectedUser: null,
-    isFormOpen: false,
-}   
-
 export const userUiSlice = createSlice({
-    name: "userUi",
-    initialState,
-    reducers: {
-        setSearchQuery: (state, action : PayloadAction<string>) => {
-            state.searchQuery = action.payload;
-            state.currentPage = 1;
-        },
-        setCurrentPage: (state, action : PayloadAction<number>) => {
-            state.currentPage = action.payload;
-        },
-        setPageSize: (state, action: PayloadAction<number>) => {
-            state.pageSize = action.payload
-            state.currentPage = 1;
-        },
-        setSelectedUser: (state, action: PayloadAction<User | null>) => {
-            state.selectedUser = action.payload
-        },
-        openForm: (state) => {
-            state.isFormOpen = true;
-        },
-        closeForm: (state) => {
-            state.isFormOpen = false;
-            state.selectedUser = null;
-        }
-    }
+  name: "userUi",
+  initialState,
+  reducers: {
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.searchQuery = action.payload
+      state.currentPage = 1
+    },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload
+    },
+    setPageSize: (state, action: PayloadAction<number>) => {
+      state.pageSize = action.payload
+      state.currentPage = 1
+    },
+    setSelectedUser: (state, action: PayloadAction<User | null>) => {
+      state.selectedUser = action.payload
+    },
+    openForm: (state) => {
+      state.isFormOpen = true
+    },
+    closeForm: (state) => {
+      state.isFormOpen = false
+      state.selectedUser = null
+    },
+  },
 })
 
-export const {setSearchQuery, setCurrentPage, setPageSize, setSelectedUser, openForm, closeForm} = userUiSlice.actions;
-export default userUiSlice.reducer;
+export const {
+  setSearchQuery,
+  setCurrentPage,
+  setPageSize,
+  setSelectedUser,
+  openForm,
+  closeForm,
+} = userUiSlice.actions
+export default userUiSlice.reducer

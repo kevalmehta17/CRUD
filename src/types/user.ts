@@ -5,3 +5,11 @@ export interface User {
   country: string
   state: string
 }
+
+export interface UserUiState {
+  searchQuery: string
+  currentPage: number
+  pageSize: number
+  selectedUser: User | null
+  isFormOpen: boolean
+}

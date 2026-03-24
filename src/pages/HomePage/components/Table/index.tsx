@@ -8,20 +8,11 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import type { User } from "@/types/user"
 import { Pencil } from "lucide-react"
 import ErrorMsg from "@/components/ErrorMsg"
 import DeleteDialog from "@/components/DeleteDialog"
 import EmptyInputGroup from "@/components/EmptyInput"
-
-interface TableListProps {
-  data: User[]
-  isLoading: boolean
-  isError: boolean
-  onEditClick: (user: User) => void
-  onDeleteClick: (userId: string) => void
-  isDeleting: boolean
-}
+import type { TableListProps } from "@/pages/HomePage/types"
 
 const TableData = ({
   data,
