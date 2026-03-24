@@ -1,9 +1,9 @@
-import TableList from "./components/Table/TableList"
-import UserForm from "./components/Form/UserForm"
-import SearchBar from "./components/SearchBar/SearchBar"
-import Pagination from "./components/Pagination/Pagination"
+import TableList from "./components/Table"
+import UserForm from "./components/Form"
+import SearchBar from "./components/SearchBar"
+import Pagination from "./components/Pagination"
 import { Button } from "@/components/ui/button"
-import { useUsersTable } from "@/hooks/useUserTable"
+import { useUsersTable } from "@/pages/HomePage/hooks/useUserTable"
 
 const HomePage = () => {
   const {

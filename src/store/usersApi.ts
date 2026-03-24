@@ -1,10 +1,10 @@
 import type { User } from "@/types/user"
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
-
+console.log("api ", import.meta.env.BASE_URL)
 export const usersApi = createApi({
   reducerPath: "usersApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://69bb87d60915748735b967b4.mockapi.io",
+    baseUrl: import.meta.env.VITE_BASE_URL
   }),
   tagTypes: ["Users"], 
   endpoints: (builder) => ({
