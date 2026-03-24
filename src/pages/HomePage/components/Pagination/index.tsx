@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import { getPageNumbers } from "@/pages/HomePage/components/Pagination/utils/getPageNumbers.ts";
 
 interface PaginationProps {
   currentPage: number
@@ -14,30 +15,6 @@ interface PaginationProps {
   onPageChange: (page: number) => void
   pageSize: number
   onPageSizeChange: (size: number) => void
-}
-
-const getPageNumbers = (
-  currentPage: number,
-  totalPages: number
-): (number | "...")[] => {
-  if (totalPages <= 4) {
-    return Array.from({ length: totalPages }, (_, i) => i + 1)
-  }
-
-  const pages: (number | "...")[] = [1]
-
-  if (currentPage > 3) pages.push("...")
-
-  const start = Math.max(2, currentPage - 1)
-  const end = Math.min(totalPages - 1, currentPage + 1)
-
-  for (let i = start; i <= end; i++) {
-    pages.push(i)
-  }
-  if (currentPage < totalPages - 2) pages.push("...")
-
-  pages.push(totalPages)
-  return pages
 }
 
 const Pagination = ({

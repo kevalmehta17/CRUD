@@ -17,6 +17,8 @@ const HomePage = () => {
     onPageChange,
     onPageSizeChange,
     onAddUser,
+    handleDelete,
+    isDeleting
   } = useUsersTable()
 
   return (
@@ -38,6 +40,8 @@ const HomePage = () => {
               isLoading={isLoading}
               isError={isError}
               onEditClick={handleEditClick}
+              onDeleteClick={handleDelete}
+              isDeleting={isDeleting}
             />
           </div>
         </div>

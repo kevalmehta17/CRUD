@@ -19,9 +19,18 @@ interface TableListProps {
   isLoading: boolean
   isError: boolean
   onEditClick: (user: User) => void
+  onDeleteClick: (userId: string) => void
+  isDeleting: boolean
 }
 
-function TableData({ data, isLoading, isError, onEditClick }: TableListProps) {
+const TableData = ({
+  data,
+  isLoading,
+  isError,
+  onEditClick,
+  onDeleteClick,
+  isDeleting,
+}: TableListProps) => {
   if (isLoading) {
     return (
       <div className="relative flex h-full items-center justify-center">
@@ -44,9 +53,9 @@ function TableData({ data, isLoading, isError, onEditClick }: TableListProps) {
     return <EmptyInputGroup />
   }
   return (
-    <Table className="h-">
+    <Table>
       <TableHeader className="sticky top-0 z-10 bg-slate-800">
-        <TableRow className="hover:bg-transparent text-base">
+        <TableRow className="text-base hover:bg-transparent">
           <TableHead>Name</TableHead>
           <TableHead>City</TableHead>
           <TableHead>Country</TableHead>
@@ -73,7 +82,10 @@ function TableData({ data, isLoading, isError, onEditClick }: TableListProps) {
               </Button>
             </TableCell>
             <TableCell>
-              <DeleteDialog userId={user.id} />
+              <DeleteDialog
+                isDeleting={isDeleting}
+                onClick={() => onDeleteClick(user.id)}
+              />
             </TableCell>
           </TableRow>
         ))}

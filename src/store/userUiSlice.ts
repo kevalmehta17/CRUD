@@ -1,7 +1,7 @@
 import type { User } from "@/types/user";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-interface userUiProps  {
+interface UserUiState  {
     searchQuery : string;
     currentPage : number;
     pageSize : number;
@@ -9,7 +9,7 @@ interface userUiProps  {
     isFormOpen : boolean;
 }
 
-const initialState : userUiProps = {
+const initialState : UserUiState = {
     searchQuery : "",
     currentPage: 1,
     pageSize:  10,

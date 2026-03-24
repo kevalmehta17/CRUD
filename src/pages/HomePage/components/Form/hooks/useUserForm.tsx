@@ -4,31 +4,15 @@ import { useCreateUserMutation, useUpdateUserMutation } from "@/store/usersApi"
 import { closeForm } from "@/store/userUiSlice"
 import type { RootState } from "@/store/UserStore"
 import { toast } from "sonner"
+import { emptyFormData } from "@/constants/constant"
+import type { FormData, FormErrors } from "@/pages/HomePage/types"
 
-interface FormData {
-  name: string
-  city: string
-  country: string
-  state: string
-}
-
-interface FormErrors {
-  name?: string
-  city?: string
-  country?: string
-  state?: string
-}
-
-const emptyFormData: FormData = {
-  name: "",
-  city: "",
-  country: "",
-  state: "",
-}
 
 export const useUserForm = () => {
   const dispatch = useDispatch()
-  const selectedUser = useSelector((state: RootState) => state.userUi.selectedUser)
+  const selectedUser = useSelector(
+    (state: RootState) => state.userUi.selectedUser
+  )
   const isFormOpen = useSelector((state: RootState) => state.userUi.isFormOpen)
 
   const [formData, setFormData] = useState<FormData>(emptyFormData)

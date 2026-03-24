@@ -10,25 +10,17 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { useDeleteUserMutation } from "@/store/usersApi"
 import { Trash, Trash2Icon } from "lucide-react"
-import { toast } from "sonner"
+
 
 interface DeleteProps {
-  userId: string
+  onClick: () => void
+  isDeleting: boolean
 }
 
-export default function DeleteDialog({ userId }: DeleteProps) {
-  const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
-  const handleDelete = async () => {
-    try {
-      await deleteUser(userId).unwrap();
-      toast.success("User deleted successfully!");
-    } catch (error) {
-      toast.error("Failed to delete user.");
-      console.error("Delete user error:", error);
-    }
-  }
+export default function DeleteDialog({ onClick, isDeleting }: DeleteProps) {
+
+  console.log("DeleteDialog rendered with isDeleting:", isDeleting);
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -42,20 +34,17 @@ export default function DeleteDialog({ userId }: DeleteProps) {
             <Trash2Icon />
           </AlertDialogMedia>
           <AlertDialogTitle>Delete User</AlertDialogTitle>
-          <AlertDialogDescription>  
+          <AlertDialogDescription>
             This will permanently delete the User. <br />
             Are You Sure?
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel variant="outline" disabled={isDeleting}>
-            Cancel
-          </AlertDialogCancel>
+          <AlertDialogCancel variant="outline">Cancel</AlertDialogCancel>
 
           <Button
             variant="destructive"
-            disabled={isDeleting}
-            onClick={handleDelete}
+            onClick={onClick}
             type="submit"
             className="cursor-pointer"
           >
