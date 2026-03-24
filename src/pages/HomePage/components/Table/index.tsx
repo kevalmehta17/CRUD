@@ -21,40 +21,41 @@ interface TableListProps {
   onEditClick: (user: User) => void
 }
 
-function TableData({
-  data,
-  isLoading,
-  isError,
-  onEditClick,
-}: TableListProps) {
-
+function TableData({ data, isLoading, isError, onEditClick }: TableListProps) {
   if (isLoading) {
     return (
-      <div className="flex justify-center relative items-center h-full">
-
-      <Button variant="outline" disabled size="sm" className="absolute top-1/2 -translate-y-1/2 cursor-pointer">
-        <Spinner data-icon="inline-start" />
-        Please wait
-      </Button>
+      <div className="relative flex h-full items-center justify-center">
+        <Button
+          variant="outline"
+          disabled
+          size="sm"
+          className="absolute top-1/2 -translate-y-1/2 cursor-pointer"
+        >
+          <Spinner data-icon="inline-start" />
+          Please wait
+        </Button>
       </div>
     )
   }
   if (isError) {
     return <ErrorMsg />
   }
-  if(!data || data.length == 0){
-    return <EmptyInputGroup />; 
+  if (!data || data.length == 0) {
+    return <EmptyInputGroup />
   }
   return (
-    <Table className="min-w-150 w-full">
-      <TableHeader>
-        <TableRow>
+    <Table className="h-">
+      <TableHeader className="sticky top-0 z-10 bg-slate-800">
+        <TableRow className="hover:bg-transparent text-base">
           <TableHead>Name</TableHead>
           <TableHead>City</TableHead>
           <TableHead>Country</TableHead>
           <TableHead>State</TableHead>
+          <TableHead>Edit</TableHead>
+          <TableHead>Delete</TableHead>
         </TableRow>
       </TableHeader>
+
       <TableBody>
         {data?.map((user) => (
           <TableRow key={user.id}>
@@ -63,7 +64,11 @@ function TableData({
             <TableCell>{user.country}</TableCell>
             <TableCell>{user.state}</TableCell>
             <TableCell>
-              <Button className="cursor-pointer" variant={"outline"} onClick={() => onEditClick(user)}>
+              <Button
+                className="cursor-pointer"
+                variant={"outline"}
+                onClick={() => onEditClick(user)}
+              >
                 <Pencil />
               </Button>
             </TableCell>
@@ -77,4 +82,4 @@ function TableData({
   )
 }
 
-export default TableData;
+export default TableData
