@@ -37,7 +37,6 @@ export const useUserForm = () => {
   const [createUser, { isLoading: isCreating }] = useCreateUserMutation()
   const [updateUser, { isLoading: isUpdating }] = useUpdateUserMutation()
 
-  // Sync selectedUser → formData when modal opens/closes
   useEffect(() => {
     if (!isFormOpen) {
       setFormData(emptyFormData)

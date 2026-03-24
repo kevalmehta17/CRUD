@@ -1,7 +1,6 @@
 import { useMemo } from "react"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useGetUsersQuery } from "@/store/usersApi"
-import { useAppDispatch } from "@/store/hooks"
 import {
   openForm,
   setSelectedUser,
@@ -12,7 +11,7 @@ import type { RootState } from "@/store/UserStore"
 import type { User } from "@/types/user"
 
 export const useUsersTable = () => {
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
   const { data, isLoading, isError } = useGetUsersQuery()
 
   const searchQuery = useSelector(

@@ -26,7 +26,7 @@ const HomePage = () => {
           <div className="w-full max-w-sm">
             <SearchBar />
           </div>
-          <Button onClick={onAddUser}>+ Add User</Button>
+          <Button className="cursor-pointer" onClick={onAddUser}>+ Add User</Button>
         </div>
 
         <div className="overflow-hidden rounded-md border">

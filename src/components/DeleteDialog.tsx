@@ -32,7 +32,7 @@ export default function DeleteDialog({ userId }: DeleteProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive">
+        <Button variant="destructive" className="cursor-pointer">
           <Trash />
         </Button>
       </AlertDialogTrigger>
@@ -57,6 +57,7 @@ export default function DeleteDialog({ userId }: DeleteProps) {
             disabled={isDeleting}
             onClick={handleDelete}
             type="submit"
+            className="cursor-pointer"
           >
             {isDeleting ? "Deleting..." : "Delete"}
           </Button>

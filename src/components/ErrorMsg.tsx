@@ -2,7 +2,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircleIcon } from "lucide-react";
 
 export default function ErrorMsg() {
-  console.log("inside Error component")
   return (
     <div className="flex flex-col items-center justify-center h-full">
       <Alert

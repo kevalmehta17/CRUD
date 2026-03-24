@@ -43,7 +43,7 @@ const UserForm = () => {
           </DialogHeader>
 
           <div className="flex flex-col gap-4 py-4">
-            {/* Name */}
+        
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="name">Name</Label>
               <Input
@@ -58,7 +58,6 @@ const UserForm = () => {
               )}
             </div>
 
-            {/* City */}
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="city">City</Label>
               <Input
@@ -73,7 +72,6 @@ const UserForm = () => {
               )}
             </div>
 
-            {/* Country */}
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="country">Country</Label>
               <Input
@@ -88,7 +86,6 @@ const UserForm = () => {
               )}
             </div>
 
-            {/* State */}
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="state">State</Label>
               <Input
@@ -106,7 +103,7 @@ const UserForm = () => {
 
           <DialogFooter>
             <DialogClose asChild>
-              <Button
+              <Button className="cursor-pointer"
                 type="button"
                 variant="outline"
                 disabled={isLoading}
@@ -115,7 +112,7 @@ const UserForm = () => {
                 Cancel
               </Button>
             </DialogClose>
-            <Button type="submit" disabled={isLoading}>
+            <Button className="cursor-pointer" type="submit" disabled={isLoading}>
               {isLoading ? "Saving..." : selectedUser ? "Update" : "Add User"}
             </Button>
           </DialogFooter>

@@ -28,13 +28,11 @@ function TableData({
   onEditClick,
 }: TableListProps) {
 
-  console.log("data in table list is", data)
-
   if (isLoading) {
     return (
       <div className="flex justify-center relative items-center h-full">
 
-      <Button variant="outline" disabled size="sm" className="absolute top-1/2 -translate-y-1/2">
+      <Button variant="outline" disabled size="sm" className="absolute top-1/2 -translate-y-1/2" cursor-pointer>
         <Spinner data-icon="inline-start" />
         Please wait
       </Button>
@@ -45,7 +43,6 @@ function TableData({
     return <ErrorMsg />
   }
   if(!data || data.length == 0){
-    console.log("i am here")
     return <EmptyInputGroup />;
   }
   return (

@@ -1,13 +1,13 @@
 import { Input } from "@/components/ui/input"
 import { setSearchQuery } from "@/store/userUiSlice"
 import { useEffect, useState } from "react"
-import { useAppDispatch } from "@/store/hooks"
 import { X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { useDispatch } from "react-redux"
 
 const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState("")
-  const dispatch = useAppDispatch()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -36,7 +36,7 @@ const SearchBar = () => {
           variant="ghost"
           size="icon"
           onClick={handleClearField}
-          className="absolute top-1/2 right-2 h-6 w-6 -translate-y-1/2"
+          className="absolute top-1/2 right-2 h-6 w-6 -translate-y-1/2 cursor-pointer" 
         >
           <X className="h-4 w-4" />
         </Button>
