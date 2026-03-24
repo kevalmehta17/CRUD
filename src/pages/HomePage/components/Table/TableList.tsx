@@ -32,7 +32,7 @@ function TableData({
     return (
       <div className="flex justify-center relative items-center h-full">
 
-      <Button variant="outline" disabled size="sm" className="absolute top-1/2 -translate-y-1/2" cursor-pointer>
+      <Button variant="outline" disabled size="sm" className="absolute top-1/2 -translate-y-1/2 cursor-pointer">
         <Spinner data-icon="inline-start" />
         Please wait
       </Button>
@@ -43,7 +43,7 @@ function TableData({
     return <ErrorMsg />
   }
   if(!data || data.length == 0){
-    return <EmptyInputGroup />;
+    return <EmptyInputGroup />; 
   }
   return (
     <Table>
